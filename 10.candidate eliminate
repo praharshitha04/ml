@@ -1,0 +1,30 @@
+#candidate elimination..
+import pandas as pd
+df=pd.read_csv('ENJOYSPORT.csv')
+def ce(df):
+  n=len(df.columns)-1
+  s=['s']*n
+  G=[]
+  for i in range(len(df)):
+    l=df.iloc[i].to_list()
+    if(l[-1]==1):
+      for j in range(len(s)):
+        if(l[j]!=s[j] and s[j]=='s'):
+          s[j]=l[j]
+        elif(l[j]!=s[j] and s[j]!='s'):
+          s[j]='?'
+    if(l[-1]==0):
+      for j in range(len(s)):
+        if(l[j]!=s[j] and s[j]!='?'):
+          g=['?']*n
+          g[j]=s[j]
+          G.append(g)
+    if(G):
+      for j in G:
+        for k in j:
+          if k!='?' and k not in s:
+            G.remove(j)
+    print('for instance',i,'s is',s)
+    print('for instance',i,'G is',G)
+
+ce(df)
